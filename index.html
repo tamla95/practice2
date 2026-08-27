@@ -1,1 +1,70 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>학교시설공사 매뉴얼 AI 챗봇</title></head><body><div style="font-family:sans-serif;padding:40px">학교시설공사 AI 챗봇을 불러오는 중...</div><script>(async()=>{try{const ps=await Promise.all([1,2,3,4].map(n=>fetch(`parts/part0${n}.txt`).then(r=>{if(!r.ok)throw new Error(`part0${n} 로드 실패`);return r.text()})));let s=ps.join('');const marker=',"raw_text_lines":[';const i=s.indexOf(marker);if(i<0)throw new Error('매뉴얼 데이터 경계를 찾지 못했습니다.');const closeScript='</scr'+'ipt>';const openApp='<scr'+'ipt src="app.js"></scr'+'ipt>';s=s.slice(0,i)+'}'+closeScript+openApp+'</body></html>';document.open();document.write(s);document.close();}catch(e){document.body.innerHTML='<pre style="padding:30px;color:#b91c1c">로드 실패: '+String(e.message||e)+'</pre>';}})();</script></body></html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>학교시설공사 매뉴얼 AI 챗봇</title>
+<style>
+:root{--bg:#f4f7fb;--panel:#fff;--navy:#10233f;--blue:#2f63d8;--text:#1c2737;--muted:#64748b;--line:#dbe3ef;--ok:#0f8a5f;--warn:#b45309;--shadow:0 14px 40px rgba(16,35,63,.10)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Pretendard,"Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text)}
+.app{min-height:100vh;display:grid;grid-template-columns:280px 1fr}.side{background:var(--navy);color:#fff;padding:28px 20px;display:flex;flex-direction:column;gap:22px}.brand{font-size:20px;font-weight:800;line-height:1.35}.brand small{display:block;font-size:12px;font-weight:500;color:#b9c7dc;margin-top:7px}.menu{display:grid;gap:8px}.menu button{border:0;background:transparent;color:#dce6f5;text-align:left;padding:11px 12px;border-radius:10px;cursor:pointer;font:inherit}.menu button:hover{background:rgba(255,255,255,.08)}.meta{margin-top:auto;font-size:12px;line-height:1.7;color:#b9c7dc}.main{display:flex;flex-direction:column;min-width:0}.top{background:#fff;border-bottom:1px solid var(--line);padding:18px 26px;display:flex;gap:14px;align-items:center;justify-content:space-between}.title h1{font-size:20px;margin:0}.title p{font-size:12px;color:var(--muted);margin:4px 0 0}.api{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.api input,.api select{border:1px solid var(--line);border-radius:9px;padding:9px 10px;background:#fff}.api input{width:250px}.btn{border:0;border-radius:9px;padding:10px 14px;font-weight:700;cursor:pointer}.btn.ghost{background:#eef3fa;color:#24405f}.status{font-size:12px;color:var(--muted)}
+.chat{flex:1;overflow:auto;padding:26px;display:flex;flex-direction:column;gap:18px}.welcome{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:18px;padding:22px;max-width:900px}.welcome h2{margin:0 0 8px;font-size:22px}.welcome p{margin:0;color:var(--muted);line-height:1.7}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.chip{border:1px solid #cbd9f4;background:#fff;color:#234b9d;border-radius:999px;padding:8px 12px;cursor:pointer}.msg{max-width:980px;width:100%}.bubble{border-radius:16px;padding:16px 18px;line-height:1.75;white-space:pre-wrap}.user .bubble{background:var(--blue);color:#fff;margin-left:auto;max-width:760px}.assistant .bubble{background:#fff;border:1px solid var(--line);box-shadow:0 8px 24px rgba(16,35,63,.06)}.answer-title{font-weight:800;margin-bottom:8px}.evidence{margin-top:12px;border-top:1px dashed var(--line);padding-top:12px}.source-card{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:11px 12px;margin-top:8px}.source-path{font-size:12px;font-weight:800;color:#294f99}.source-text{font-size:13px;line-height:1.55;margin-top:7px;color:#334155;white-space:pre-wrap}.notice{font-size:12px;color:var(--warn);margin-top:10px}.composer{background:#fff;border-top:1px solid var(--line);padding:16px 24px}.compose-inner{max-width:1100px;margin:auto;display:grid;grid-template-columns:1fr 110px;gap:10px}.compose-inner textarea{resize:none;min-height:70px;max-height:180px;border:2px solid #b8c9e8;border-radius:16px;padding:16px;font:inherit;outline:none}.ask{border:0;border-radius:16px;background:var(--blue);color:#fff;font-size:15px;font-weight:800;cursor:pointer}.ask:disabled{opacity:.55;cursor:not-allowed}.footnote{max-width:1100px;margin:7px auto 0;font-size:11px;color:var(--muted)}
+@media(max-width:850px){.app{grid-template-columns:1fr}.side{display:none}.top{align-items:flex-start;flex-direction:column}.api input{width:210px}.chat{padding:16px}.composer{padding:12px}.compose-inner{grid-template-columns:1fr 84px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+  <div class="brand">학교시설공사 AI 챗봇<small>2025 행정절차 매뉴얼 기반 · Gemini</small></div>
+  <div class="menu">
+    <button data-q="착공 시 업체 제출서류를 알려줘">착공 제출서류</button>
+    <button data-q="준공검사 때 학교가 확인해야 할 사항을 알려줘">준공검사 확인사항</button>
+    <button data-q="재해예방기술지도 용역 대상 기준과 제출서류를 알려줘">재해예방기술지도</button>
+    <button data-q="환경보전비로 사용할 수 있는 항목과 사용할 수 없는 항목을 구분해줘">환경보전비</button>
+    <button data-q="설계용역 납품서류는 무엇인가?">설계용역 납품서류</button>
+  </div>
+  <div class="meta">2025년 학교시설공사 행정절차 매뉴얼<br>제주특별자치도교육청 학교시설과</div>
+</aside>
+<main class="main">
+<header class="top">
+  <div class="title"><h1>매뉴얼 근거조항까지 제시하는 챗봇</h1><p>질문 → 관련 근거 검색 → Gemini 답변 → 근거 표시</p></div>
+  <div class="api">
+    <input id="apiKey" type="password" placeholder="Gemini API Key" autocomplete="off">
+    <select id="model"><option value="">모델 자동선택</option></select>
+    <button class="btn ghost" id="saveKey">키 저장</button>
+    <button class="btn ghost" id="testKey">연결 확인</button>
+    <span class="status" id="status">API 키 필요</span>
+  </div>
+</header>
+<section class="chat" id="chat">
+  <div class="welcome"><h2>학교시설공사 매뉴얼에 물어보세요</h2><p>핵심 업무 항목의 매뉴얼 근거를 먼저 찾은 뒤 Gemini에 전달합니다. 답변 아래에 사용한 근거를 함께 표시합니다.</p><div class="chips"><button class="chip" data-q="착공 시 업체 제출서류를 알려줘">착공서류</button><button class="chip" data-q="준공검사 시 정산항목을 알려줘">준공 정산항목</button><button class="chip" data-q="환경보전비 사용 가능 항목을 알려줘">환경보전비</button></div></div>
+</section>
+<footer class="composer"><div class="compose-inner"><textarea id="question" placeholder="예: 착공 시 업체 제출서류는?"></textarea><button class="ask" id="ask">질문</button></div><div class="footnote">※ API 키는 현재 브라우저의 localStorage에 저장됩니다. 공개 운영 시에는 서버 프록시 방식이 더 안전합니다.</div></footer>
+</main>
+</div>
+<script>
+'use strict';
+const SOURCES=[
+ {id:'C3-S2',path:'제3장 시설공사 > 2. 시공사 제출서류 > 착공시 제출서류',keywords:['착공','착공계','착공신고서','업체','시공사','제출서류','현장대리인'],text:`착공시 제출서류\n1. 착공신고서(착공계)\n2. 현장기술자 지정신고 - 현장대리인(건축,토목,기계), 선임계, 재직증명서, 건설기술인협회 발행 경력증명서, 자격증 사본\n3. 예정공정표\n4. 안전·환경 관리 계획서(원가계상 반영시, 사용계획서 포함)\n5. 착공전 사진\n6. 공사내역서\n7. 건설법령상의 재신고(원가계상 반영시): 건강보험료, 연금보험료, 산재·고용보험료, 퇴직공제부금 가입 관련 서류\n8. 직접시공계획서, 하도급계획서(계약후 30일 이내)\n10. 계약서 사본`},
+ {id:'C3-S5',path:'제3장 시설공사 > 5. 검사(기성/준공) > 준공검사',keywords:['준공','준공검사','정산','보험료','시운전','준공도면'],text:`준공검사\n- 검사시기: 준공신고서 접수 후 14일 이내\n- 준공내역서 사후 정산 적정성 확인: 건강·연금보험료, 노인장기요양보험료, 산업안전보건관리비 등\n- 준공정산내역서 검토 확인: 계약수량, 적정 자재(KS), 계약품목 동일 여부\n- 준공도면 검토 확인 및 각종 기기의 시운전\n- 폐품 또는 발생물 처리 적정성\n- 지급자재의 사용 및 잉여자재 처리 적정성\n- 제반설비 제거 및 원상복구 정리 사항`},
+ {id:'C3-S5-ENV',path:'제3장 시설공사 > 5. 검사(기성/준공) > 환경보전비 적용/비적용',keywords:['환경보전비','환경','살수차','분진막','화장실','방음벽','세륜','청소도구','쓰레기봉투'],text:`환경보전비 적용 대상 예시\n- 살수차량·물탱크 임대료, 비산먼지방지 분진막, 이동식 간이화장실, 집진시설, 가설방음벽, 세륜시설, 고압분무기·고압살수시설, 오수정화시설, 방진덮개용 부직포\n- 환경계측비용, 환경자료 및 홍보물 구입비용, 환경관련 인건비, 환경교육 비용\n비적용(사용불가) 예시\n- 청소도구, 집게, 쓰레기봉투, 단순 쓰레기용 마대, 단순 청소용 진공청소기, 현장청소 인건비, 순환골재, 폐기물처리비, 추락방지용 EGI 휀스, 일반용 부직포, 단순 청소용 마스크·장갑`},
+ {id:'C2-S5',path:'제2장 용역 > 5. 재해예방기술지도 용역',keywords:['재해예방기술지도','기술지도','산업안전보건법','1억원','120억원','150억원'],text:`규정 및 지침: 산업안전보건법 제73조 및 시행령 제59조\n적용: 공사금액 1억원 이상 120억원(토목공사 150억원) 미만인 공사와 건축법 제11조에 따른 건축허가 대상 공사\n대가 산출 원칙: 방문 횟수 방식, 기술지도 횟수 = 공사기간(일) / 15일, 소수점 버림\n착수시 제출: 착수신고서, 용역 공정예정표, 인력 투입 계획서, 책임기술자 신고서(선임계·재직증명서·등록증 및 자격증 사본), 예정공정표, 보안각서, 산출내역서\n준공시 제출: 기술지도 계약서, 재해예방기술지도 결과보고서, 개선지도 불이행 사항 통보서(해당시), 결과보고서 확인 요청서(해당시), 완료증명서`},
+ {id:'C2-S1',path:'제2장 용역 > 1. 설계용역 > 설계용역 납품서류',keywords:['설계용역','설계','납품','납품서류','착수계','시방서','구조계산서'],text:`설계용역 착수시 업체 제출목록(1부)\n1. 착수계\n2. 설계용역 공정표\n3. 분야별 참여 기술자 명단(날인)\n4. 참여기술자 자격증\n5. 보안각서\n6. 설계용역비 산출서\n7. 착수 현장 사진\n8. 계약서 사본\n납품시 업체 제출목록\n- 납품서 1부\n- 원도(A1) 1부(단순 보수공사 제외), 축소원도(A3) 3부, 시방서 3부\n- 구조계산서 3부(증·개축 시)\n- 적산서 3부\n- 건축허가서류 각 3부\n- 지질조사서 3부(별동 증·개축 시)\n- 모든 내용을 포함한 CD 각 2개\n- 조감도 1개 및 축소사진 3부(별동 증·개축 시)`},
+ {id:'C3-S7',path:'제3장 시설공사 > 7. 하자관리',keywords:['하자','하자검사','하자보수','정기검사','최종검사'],text:`하자검사\n- 정기검사: 하자담보 책임기간 중 연 2회 이상\n- 수시검사: 필요시\n- 최종검사: 하자담보책임기간 만료 직전\n- 하자검사 완료 후 하자검사조서에 따라 보고하고 하자보수관리부 작성·관리\n- 계약금액 3천만원 이하인 경우 하자검사조서 생략 가능하나 하자보수관리부는 금액 관계없이 작성`}
+];
+const $=s=>document.querySelector(s),chat=$('#chat'),apiKey=$('#apiKey'),model=$('#model'),statusEl=$('#status'),askBtn=$('#ask'),qBox=$('#question');
+apiKey.value=localStorage.getItem('gemini_api_key')||'';if(apiKey.value)statusEl.textContent='저장된 API 키 있음';
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+function retrieve(q){const nq=q.toLowerCase();return SOURCES.map(s=>({...s,score:s.keywords.reduce((a,k)=>a+(nq.includes(k.toLowerCase())?10:0),0)+(nq.includes(s.path.toLowerCase())?10:0)})).filter(s=>s.score>0).sort((a,b)=>b.score-a.score).slice(0,5);}
+function addUser(t){const e=document.createElement('div');e.className='msg user';e.innerHTML=`<div class="bubble">${esc(t)}</div>`;chat.appendChild(e);chat.scrollTop=chat.scrollHeight;}
+function render(ans,src,note=''){document.getElementById('loading')?.remove();const e=document.createElement('div');e.className='msg assistant';const cards=src.map((s,i)=>`<div class="source-card"><div class="source-path">[근거 ${i+1}] ${esc(s.path)}</div><div class="source-text">${esc(s.text)}</div></div>`).join('');e.innerHTML=`<div class="bubble"><div class="answer-title">답변</div>${esc(ans).replace(/\n/g,'<br>')}<div class="evidence"><h4>근거 조항</h4>${cards}${note?`<div class="notice">${esc(note)}</div>`:''}</div></div>`;chat.appendChild(e);chat.scrollTop=chat.scrollHeight;}
+function loading(){const e=document.createElement('div');e.id='loading';e.className='msg assistant';e.innerHTML='<div class="bubble">매뉴얼 근거를 찾고 Gemini가 답변을 작성 중입니다...</div>';chat.appendChild(e);chat.scrollTop=chat.scrollHeight;}
+async function listModels(){const key=apiKey.value.trim();const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models?pageSize=1000&key=${encodeURIComponent(key)}`);const b=await r.json().catch(()=>({}));if(!r.ok)throw new Error(b?.error?.message||`모델 목록 조회 실패 (${r.status})`);const ids=(b.models||[]).filter(x=>(x.supportedGenerationMethods||[]).includes('generateContent')).map(x=>(x.baseModelId||x.name||'').replace(/^models\//,'')).filter(Boolean);const uniq=[...new Set(ids)].sort((a,b)=>(a.includes('flash')?-1:1)-(b.includes('flash')?-1:1));model.innerHTML='';uniq.forEach(id=>{const o=document.createElement('option');o.value=id;o.textContent=id;model.appendChild(o)});if(!uniq.length)throw new Error('사용 가능한 generateContent 모델이 없습니다.');return uniq[0];}
+async function callGemini(q,src){if(!model.options.length)await listModels();const key=apiKey.value.trim(),ids=[model.value,...[...model.options].map(o=>o.value).filter(x=>x!==model.value)];const refs=src.map((s,i)=>`[근거 ${i+1}]\n${s.path}\n${s.text}`).join('\n\n---\n\n');const prompt=`당신은 학교시설공사 행정업무 질의응답 도우미다. 아래 매뉴얼 발췌만 근거로 한국어로 답하라. 일반지식으로 빈틈을 채우지 말고, 핵심 문장 끝에 [근거 N]을 붙여라.\n\n질문: ${q}\n\n매뉴얼 발췌:\n${refs}`;let last='';for(const id of ids){for(let a=0;a<2;a++){try{const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(id)}:generateContent?key=${encodeURIComponent(key)}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.2,maxOutputTokens:1400}})});const b=await r.json().catch(()=>({}));if(r.ok){const t=(b.candidates?.[0]?.content?.parts||[]).map(p=>p.text||'').join('').trim();if(t){model.value=id;return {text:t,id};}}last=b?.error?.message||`오류 ${r.status}`;if(![429,500,502,503,504].includes(r.status))break;await new Promise(x=>setTimeout(x,900));}catch(e){last=e.message}}}throw new Error(last||'Gemini 응답 실패');}
+async function ask(){const q=qBox.value.trim();if(!q)return;if(!apiKey.value.trim()){alert('먼저 Gemini API 키를 입력하세요.');return}addUser(q);qBox.value='';askBtn.disabled=true;loading();const src=retrieve(q);try{if(!src.length){render('현재 내장된 매뉴얼 핵심 항목에서 직접 연결되는 근거를 찾지 못했습니다.',[]);return}const r=await callGemini(q,src);render(r.text,src,`응답 모델: ${r.id}`)}catch(e){render(`Gemini 답변 생성에 실패했습니다.\n\n${e.message}\n\n아래 매뉴얼 근거를 확인해 주세요.`,src,'Gemini 호출이 실패해도 매뉴얼 근거는 표시됩니다.')}finally{askBtn.disabled=false;qBox.focus()}}
+$('#saveKey').addEventListener('click',()=>{const k=apiKey.value.trim();if(k){localStorage.setItem('gemini_api_key',k);statusEl.textContent='API 키 저장됨'}else{localStorage.removeItem('gemini_api_key');statusEl.textContent='API 키 삭제됨'}});
+$('#testKey').addEventListener('click',async()=>{if(!apiKey.value.trim()){alert('API 키를 입력하세요.');return}statusEl.textContent='연결 확인 중…';try{const m=await listModels();statusEl.textContent=`연결 성공 · 기본 ${m}`;statusEl.style.color='var(--ok)'}catch(e){statusEl.textContent='연결 실패';statusEl.style.color='#b91c1c';alert(e.message)}});
+askBtn.addEventListener('click',ask);qBox.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();ask()}});document.addEventListener('click',e=>{const b=e.target.closest('[data-q]');if(b){qBox.value=b.dataset.q;qBox.focus()}});
+</script>
+</body>
+</html>
